@@ -5,6 +5,7 @@ public class Experience {
     private String position;
     private int experienceYears;
 
+    // Setters
     public void setTechName(String techName) {
         this.techName = techName;
     }
@@ -15,6 +16,7 @@ public class Experience {
         this.position = position;
     }
 
+    // Getters
     public String getPosition() {
         return position;
     }

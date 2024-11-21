@@ -1,13 +1,13 @@
 package EmployeeData;
 
 public class Address  {
-    private long phoneNo;
+    private String phoneNo;
     private int street;
     private String city;
     private String state;
 
     // Setters
-    public void setPhoneNo(long phoneNo){
+    public void setPhoneNo(String  phoneNo){
         this.phoneNo = phoneNo;
     }
     public void setStreet(int street){
@@ -21,7 +21,7 @@ public class Address  {
     }
 
     // Getters
-    public long getPhoneNo(){
+    public String  getPhoneNo(){
         return phoneNo;
     }
     public int getStreet(){

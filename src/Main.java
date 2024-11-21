@@ -8,36 +8,18 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        // Initialize Classes
         Employee employee =  new Employee();
         Address address = new Address();
         Experience experience = new Experience();
-        ValidationClass validation = new ValidationClass();
-        validation.validation("validation.properties");
-        System.out.println(validation);
 
-        Scanner input = new Scanner(System.in);
+        // Validation Class
+        ValidationClass validation = new ValidationClass();
+        validation.validation("src/validation.properties");
+
 
         System.out.println("Enter Employee Data:");
-
-        while (true) {
-            System.out.println("Select Country: ");
-            String country = input.nextLine();
-            String selectedCountry = validation.validateCountry(country);
-            if (selectedCountry.equals("US") || selectedCountry.equals("PAK") || selectedCountry.equals("IND")) {
-                System.out.print("Enter Phone Number: ");
-                String phoneNo = input.nextLine();
-                if (validation.validatePhoneNumber(phoneNo, "phone.regexp", "phone.error")) {
-                    try {
-                        long num = Long.parseLong(phoneNo);
-                        address.setPhoneNo(num);
-                        System.out.println("Phone number is valid.");
-                        break;
-                    } catch (NumberFormatException e) {
-                        System.out.println("Error: Phone number must be numeric.");
-                    }
-                }
-            }
-        }
+        Scanner input = new Scanner(System.in);
 
         // Name Input
         while (true) {
@@ -53,6 +35,7 @@ public class Main {
             }
         }
 
+        // Email Input
         while (true) {
             System.out.print("Enter employee email: ");
             String email = input.nextLine();
@@ -61,6 +44,25 @@ public class Main {
             } else {
                 employee.setEmail(email);
                 break;
+            }
+        }
+
+        // Phone Input
+        while (true) {
+            System.out.print("Select Country code e.g PAK, USA, UK: ");
+            String country = input.nextLine();
+            if (validation.validateCountry(country)) {
+                System.out.print("Enter Phone Number: ");
+                String phoneNo = input.nextLine();
+                if (validation.validatePhoneNumber(phoneNo, country, "phone.error")) {
+                    try {
+                        address.setPhoneNo(phoneNo);
+                        System.out.println("Phone number is valid: " + address.getPhoneNo() );
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: Phone number must be numeric.");
+                    }
+                }
             }
         }
 
@@ -109,8 +111,6 @@ public class Main {
             if (!dept.trim().isEmpty()) {
                 employee.setDepartment(dept);
                 break;
-            } else {
-                System.out.print("Department not Empty. Please try again. ");
             }
         }
 
@@ -150,25 +150,6 @@ public class Main {
             }
         }
 
-        // Phone Number Input
-//        while (true) {
-//            System.out.print("Enter employee Phone Number: ");
-//            String phoneNo = input.nextLine();
-//
-//            if (phoneNo.length() != 13) {
-//                System.out.println("Phone number length must be 13 including the prefix (+92). Try again:");
-//            } else if (!phoneNo.startsWith("+92")) {
-//                System.out.println("Phone number must start with +92. Try again:");
-//            } else if (!phoneNo.substring(1).matches("\\d+")) {
-//                System.out.println("Phone number contains invalid characters. Try again:");
-//            } else {
-//                String numericPart = phoneNo.replace("+", "");
-//                long phone = Long.parseLong(numericPart);
-//                address.setPhoneNo(phone);
-//                break;
-//            }
-//        }
-
         // Street Input
         while (true) {
             System.out.print("Enter employee street no: ");
@@ -181,22 +162,21 @@ public class Main {
             }
         }
 
-        // Set Address
-        employee.setAddress(address);
-
         input.nextLine();
 
+        // Role Input
         while (true) {
             System.out.print("Enter employee position/role: ");
             String position = input.nextLine();
-            if (!position.trim().isEmpty()) {
+            if (position.trim().isEmpty()) {
+                System.out.print("Position not Empty. Please try again. ");
+            } else {
                 experience.setPosition(position);
                 break;
-            } else {
-                System.out.print("Position not Empty. Please try again. ");
             }
         }
 
+        // Experience Input
         while (true) {
             System.out.print("Enter employee experience in years: ");
             int experienceYears = input.nextInt();
@@ -208,6 +188,9 @@ public class Main {
             }
         }
 
+        input.nextLine();
+
+        // Tech Name Input
         while (true) {
             System.out.print("Enter employee working Tech name: ");
             String techName = input.nextLine();
@@ -219,9 +202,9 @@ public class Main {
             }
         }
 
+        employee.setAddress(address);
         employee.setExperience(experience);
 
-        System.out.println("\nEmployee Details:");
         employee.display();
     }
 }

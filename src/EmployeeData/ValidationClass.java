@@ -1,17 +1,14 @@
 package EmployeeData;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class ValidationClass {
     Properties properties = new Properties();
 
     public void validation(String propertiesFilePath){
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propertiesFilePath)) {
-            if (inputStream == null) {
-                throw new IOException("Properties file not found!");
-            }
+        try (FileInputStream inputStream = new FileInputStream(propertiesFilePath)) {
             properties.load(inputStream);
             System.out.println(inputStream);
         } catch (IOException e) {
@@ -20,23 +17,17 @@ public class ValidationClass {
 
     }
 
-    public String validateCountry(String country) {
-        String[] countries = {"Pak", "IND", "US"};
-        for (String countryName : countries) {
-            if (country.equalsIgnoreCase(countryName)) {
-                return countryName;
-            }
-        }
-        return country;
+    public boolean validateCountry(String country) {
+        return properties.containsKey(country);
+
     }
 
-
-    public boolean validatePhoneNumber(String phoneNo, String regexp, String errorMessage) {
-        String regex = properties.getProperty(regexp);
-        String error = properties.getProperty(errorMessage);
+    public boolean validatePhoneNumber(String phoneNo, String regexpKey, String errorKey) {
+        String regex = properties.getProperty(regexpKey);
+        String error = properties.getProperty(errorKey);
 
         if (regex == null) {
-            System.out.println("Invalid properties file: missing phone regex or error message.");
+            System.out.println("Regex for " + regexpKey + " is not defined in properties file.");
             return false;
         }
 
@@ -47,4 +38,5 @@ public class ValidationClass {
             return false;
         }
     }
+
 }

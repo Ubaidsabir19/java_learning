@@ -65,7 +65,7 @@ public class Employee {
         this.designation = designation;
     }
     public void setAddress(Address address){
-      this.address = address;
+        this.address = address;
     }
     public void setEmail(String email){
         this.email = email;
@@ -75,6 +75,7 @@ public class Employee {
     }
 
     public void display(){
+        System.out.println("\nEmployee Details:");
         System.out.println("Name: " + getName());
         System.out.println("Email: " + getEmail());
         System.out.println("Age: " + getAge());
