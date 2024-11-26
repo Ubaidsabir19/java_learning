@@ -1,4 +1,4 @@
-package EmployeeData;
+package employeeData;
 
 public class Experience {
     private String techName;

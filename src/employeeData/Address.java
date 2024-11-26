@@ -1,4 +1,4 @@
-package EmployeeData;
+package employeeData;
 
 public class Address  {
     private String phoneNo;

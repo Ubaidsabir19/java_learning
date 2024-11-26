@@ -1,4 +1,6 @@
-package EmployeeData;
+package employeeData;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Employee {
     private Address address;
@@ -10,6 +12,7 @@ public class Employee {
     private String department;
     private String designation;
     private String email;
+    private Date dateOfBirth;
 
     public Employee(){
         this.address = new Address();
@@ -44,6 +47,19 @@ public class Employee {
     public Experience getExperience() {
         return experience;
     }
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    // Method
+    public String getFormattedDateOfBirth() {
+        if (dateOfBirth != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return dateFormat.format(dateOfBirth);
+        } else {
+            return "No Date Selected";
+        }
+    }
 
     //Setters
     public void setName(String name){
@@ -73,11 +89,15 @@ public class Employee {
     public void setExperience(Experience experience){
         this.experience = experience;
     }
+    public void setDateOfBirth(Date dateOfBirth){
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public void display(){
         System.out.println("\nEmployee Details:");
         System.out.println("Name: " + getName());
         System.out.println("Email: " + getEmail());
+        System.out.println("DateOfBirth: " + getFormattedDateOfBirth());
         System.out.println("Age: " + getAge());
         System.out.println("Salary: " + getSalary());
         System.out.println("ID: " +  getId());
@@ -91,5 +111,4 @@ public class Employee {
         System.out.println("Experience in Years: " + getExperience().getExperienceYears());
         System.out.println("Tech Name: " + getExperience().getTechName());
     }
-
 }
