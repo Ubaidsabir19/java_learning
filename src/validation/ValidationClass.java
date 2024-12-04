@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ValidationClass {
-    public  Properties properties = new Properties();
+    public Properties properties = new Properties();
 
     public void validation(String propertiesFilePath){
         try (FileInputStream inputStream = new FileInputStream(propertiesFilePath)) {
@@ -17,10 +17,10 @@ public class ValidationClass {
         }
     }
 
-    // Check Country Code
-//    public boolean validateCountry(String countryCode) {
-//        return properties.containsKey(countryCode);
-//    }
+        // Check Country Code
+     /* public boolean validateCountry(String countryCode) {
+           return properties.containsKey(countryCode);
+        } */
 
     public boolean validatePhoneNumber(String phoneNo, String regexpKey, String errorKey) {
         String regex = properties.getProperty(regexpKey);

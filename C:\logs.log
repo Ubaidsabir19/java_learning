@@ -1,0 +1,10 @@
+2024-12-03 14:43:00 INFO  Main:23 - Hello World!
+2024-12-03 14:43:00 WARN  Main:24 - Hello World!
+2024-12-03 14:43:00 INFO  Main:26 - Hello World!
+2024-12-03 14:43:00 ERROR Main:27 - Hello World!
+2024-12-03 14:43:00 FATAL Main:28 - Hello World!
+2024-12-03 15:14:37 INFO  Main:27 - Hello World!
+2024-12-03 15:14:37 WARN  Main:28 - Hello World!
+2024-12-03 15:14:37 INFO  Main:30 - Hello World!
+2024-12-03 15:14:37 ERROR Main:31 - Hello World!
+2024-12-03 15:14:37 FATAL Main:32 - Hello World!

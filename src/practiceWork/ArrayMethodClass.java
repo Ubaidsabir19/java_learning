@@ -42,7 +42,7 @@ public class ArrayMethodClass {
         users.add("Aslam");
         users.add("Hadi");
         users.add("Ahmad");
-        users.add("ubaid");
+        users.add("ubaid ur rehman");
         System.out.println("Users: " + users);
         // sort a linked list
         Collections.sort(users);

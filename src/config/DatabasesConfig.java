@@ -5,6 +5,7 @@ import employeeData.Employee;
 import employeeData.Experience;
 import java.sql.*;
 
+// One-to-One relationship
 public class DatabasesConfig {
 
     private static Connection getDatabaseConnection(String url, String user, String password) throws SQLException {
@@ -50,7 +51,6 @@ public class DatabasesConfig {
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
-            System.out.println("Employee Data: ");
             while (resultSet.next()) {
                 System.out.println("ID: " + resultSet.getInt("id"));
                 System.out.println("Name: " + resultSet.getString("name"));
