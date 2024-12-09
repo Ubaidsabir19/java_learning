@@ -1,18 +1,13 @@
 package employeeData;
 
 public class Department {
-    private String departmentName;
+    private String name;
 
-    public Department(String departmentName) {
-        this.departmentName = departmentName;
+    public String getName() {
+        return name;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
 }

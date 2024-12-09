@@ -1,6 +1,8 @@
 package employeeData;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
     private Address address;
@@ -13,10 +15,12 @@ public class Employee {
     private String designation;
     private String email;
     private Date dateOfBirth;
+    private List<Department> departments;
 
     public Employee(){
         this.address = new Address();
         this.experience = new Experience();
+        this.departments = new ArrayList<>();
     }
 
     // Getters
@@ -46,9 +50,6 @@ public class Employee {
     }
     public Experience getExperience() {
         return experience;
-    }
-    public Date getDateOfBirth() {
-        return dateOfBirth;
     }
 
     // Method
@@ -80,9 +81,6 @@ public class Employee {
     public void setDesignation(String designation){
         this.designation = designation;
     }
-    public void setAddress(Address address){
-        this.address = address;
-    }
     public void setEmail(String email){
         this.email = email;
     }
@@ -92,6 +90,25 @@ public class Employee {
     public void setDateOfBirth(Date dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void addDepartment(Department department) {
+        if (!departments.contains(department)) {
+            departments.add(department);
+            department.addEmployee(this);
+        }
+    }
+
+    public void removeDepartment(Department department) {
+        if (departments.contains(department)) {
+            departments.remove(department);
+            department.removeEmployee(this);
+        }
+    }
+
 
     public void display(){
         System.out.println("\nEmployee Details:");

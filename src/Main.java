@@ -1,5 +1,7 @@
+import config.DatabaseConfig2;
 import config.DatabasesConfig1;
 import employeeData.Address;
+import employeeData.Department;
 import employeeData.Employee;
 import employeeData.Experience;
 import org.apache.logging.log4j.LogManager;
@@ -31,6 +33,9 @@ public class Main {
         Employee employee = new Employee();
         Address address = new Address();
         Experience experience = new Experience();
+        Department department = new Department();
+
+
 
         // Validation Class
         ValidationClass validation = new ValidationClass();
@@ -43,6 +48,8 @@ public class Main {
         String configUrl = validation.properties.getProperty("url");
 
         Scanner input = new Scanner(System.in);
+
+        enterEmployeeMToM(input, configUrl,configUser,configPassword, employee,department);
 
         System.out.println("Choose which you want: ");
         System.out.println("1. Insert Employee Data");
@@ -284,6 +291,8 @@ public class Main {
         }
     }
 
+
+
     private static void enterAddress(Scanner input, String configUrl, String configUser, String configPassword, Address address, ValidationClass validationClass) throws SQLException {
         // Phone Input
         System.out.print("Enter PhoneNo: ");
@@ -412,4 +421,179 @@ public class Main {
         input.nextLine();
         DatabasesConfig1.deleteEmployee(configUrl, configUser, configPassword,tableName, deletedID);
     }
+
+    // Many to many
+    private static void enterEmployeeMToM( Scanner input, String configUrl, String configUser, String configPassword, Employee employee, Department department) throws SQLException {
+
+        try {
+            // Name Input
+            System.out.print("Enter employee name: ");
+            while (true) {
+                String name = input.nextLine();
+                if (name.isEmpty()) {
+                    System.out.print("Name cannot be empty");
+                } else if (name.matches(".*\\d.*") || !name.matches("^[a-zA-Z]+$")) {
+                    System.out.print("Name accept only alphabets. Please enter again: ");
+                } else {
+                    employee.setName(name);
+                    break;
+                }
+            }
+
+            // Email Input
+            System.out.print("Enter employee email: ");
+            while (true) {
+                String email = input.nextLine();
+                if (email.trim().isEmpty() || !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                    System.out.print("Email type invalid or empty include @ or domain name (e.g, gmail.com, abc.net). Please enter again: ");
+                } else {
+                    employee.setEmail(email);
+                    break;
+                }
+            }
+
+            // Date Input
+            System.out.print("Enter employee Date of Birth (yyyy-MM-dd): ");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setLenient(false);
+
+            while (true) {
+                String inputDate = input.nextLine().trim();
+                if (inputDate.isEmpty()) {
+                    System.out.print("Date of Birth cannot be empty. Please enter again in format yyyy-MM-dd: ");
+                } else {
+                    try {
+                        Date parsedDate = dateFormat.parse(inputDate);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(parsedDate);
+
+                        int year = calendar.get(Calendar.YEAR);
+                        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                        if (year > currentYear) {
+                            System.out.print("Invalid year. The year cannot be greater than the current year. Please enter again in format yyyy-MM-dd: ");
+                            continue;
+                        }
+
+                        employee.setDateOfBirth(parsedDate);
+                        System.out.println("Date of Birth inserted successfully: " + parsedDate);
+                        break;
+
+                    } catch (ParseException e) {
+                        System.out.print("Invalid date format. Please enter the date in yyyy-MM-dd format: ");
+                    }
+                }
+            }
+
+            // Age Input
+            System.out.print("Enter employee age: ");
+            while (true) {
+                String inputAge = input.nextLine();
+                if (inputAge.isEmpty()) {
+                    System.out.print("Age cannot be empty. Please enter again: ");
+                } else {
+                    try {
+                        int age = Integer.parseInt(inputAge);
+                        if (age < 0 || age > 60) {
+                            System.out.print("Age must be between 0 and 60. Please enter again: ");
+                        } else {
+                            employee.setAge(age);
+                            break;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.print("Age must be an integer. Please enter again: ");
+                    }
+                }
+            }
+
+            // Salary Input
+            System.out.print("Enter employee salary: ");
+            while (true) {
+                String salary = input.nextLine();
+                if (salary.isEmpty()) {
+                    System.out.print("Salary is empty. Please enter again: ");
+                } else {
+                    try {
+                        double salaryData = Double.parseDouble(salary);
+                        if (salaryData < 1000 || salaryData > 10000000) {
+                            System.out.print("Salary must be between 0 and 10,000,000. Enter again: ");
+                        } else {
+                            employee.setSalary(salaryData);
+                            break;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.print("Salary must be a number. Please enter again: ");
+                    }
+                }
+            }
+
+            // ID Input
+            System.out.print("Enter employee id: ");
+            while (true) {
+                String id = input.nextLine();
+                if (id.isEmpty()) {
+                    System.out.print("ID not be empty. Please enter id: ");
+                } else if (id.length() > 10) {
+                    System.out.print("ID must be less than 10 characters. Please enter id: ");
+                } else {
+                    try {
+                        int idData = Integer.parseInt(id);
+                        if (idData < 0) {
+                            System.out.print("ID must be greater than 0. Please enter id: ");
+                        } else {
+                            employee.setId(idData);
+                            break;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.print("Salary must be in number. Please enter again: ");
+                    }
+                }
+            }
+
+            // Department Input
+            System.out.print("Enter employee department: ");
+            while (true) {
+                String dept = input.nextLine();
+                if (dept.isEmpty()) {
+                    System.out.println("Department is empty. Please enter a department: ");
+                } else {
+                    try {
+                        employee.setDepartment(dept);
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.print("Invalid department. Please enter a valid department: ");
+                    }
+                }
+            }
+
+            // Designation Input
+            System.out.print("Enter employee designation: ");
+            while (true) {
+                String designation = input.nextLine();
+                if (!designation.trim().isEmpty()) {
+                    employee.setDesignation(designation);
+                    break;
+                } else {
+                    System.out.print("Designation not Empty. Please enter again: ");
+                }
+            }
+
+            System.out.print("Enter department name: ");
+            while (true) {
+                String deptName = input.nextLine();
+                if (deptName.trim().isEmpty()) {
+                    System.out.print("Department name invalid. Please enter again: ");
+                } else {
+                    department.setName(deptName);
+                    break;
+                }
+            }
+
+            DatabaseConfig2.insertData(configUrl, configUser, configPassword, employee, String.valueOf(department));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }

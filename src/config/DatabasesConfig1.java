@@ -12,31 +12,6 @@ public class DatabasesConfig1 {
         return connection;
     }
 
-//    public static void addEmployee(String url, String user, String password, String tableName, Employee employee, Address address, Experience experience) {
-//        String insertQueryEmployee = "INSERT INTO employee (employee_id, name, email, age, salary, department, designation, birthdate) " +
-//                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-//
-//        String insertQueryAddress = "INSERT INTO address (employee_id, phoneNo, state, city, street) " +
-//                "VALUES (?, ?, ?, ?, ?)";
-//
-//        String insertQueryExperience = "INSERT INTO experience (employee_id, techName, position, years) " +
-//                "VALUES (?, ?, ?, ?)";
-//
-//        try (Connection connection = getDatabaseConnection1(url, user, password)) {
-//            connection.setAutoCommit(false);
-//
-//            switch (tableName) {
-//                case "employee" -> addEmployeeData(connection, insertQueryEmployee, employee);
-//                case "address" -> addAddressData(connection, insertQueryAddress, employee.getId(), address);
-//                case "experience" -> addExperienceData(connection, insertQueryExperience, employee.getId(), experience);
-//                default -> System.out.println("Invalid table name: " + tableName);
-//            }
-//            connection.commit();
-//        } catch (Exception e) {
-//            System.err.println("An error occurred while inserting data: " + e.getMessage());
-//        }
-//    }
-
     public static void addEmployeeData(String url, String user, String password, Employee employee) throws SQLException {
         String insertQueryEmployee = "INSERT INTO employee (id, name, email, age, salary, department, designation, birthdate) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -239,7 +214,6 @@ public class DatabasesConfig1 {
             System.err.println("An error occurred while deleting employee: " + e.getMessage());
         }
     }
-
 
     public static void checkRows(int rowsUpdated, String msg) {
         System.out.println(rowsUpdated > 0 ? msg : "No matching found");
