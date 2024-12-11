@@ -95,20 +95,6 @@ public class Employee {
         return departments;
     }
 
-    public void addDepartment(Department department) {
-        if (!departments.contains(department)) {
-            departments.add(department);
-            department.addEmployee(this);
-        }
-    }
-
-    public void removeDepartment(Department department) {
-        if (departments.contains(department)) {
-            departments.remove(department);
-            department.removeEmployee(this);
-        }
-    }
-
 
     public void display(){
         System.out.println("\nEmployee Details:");

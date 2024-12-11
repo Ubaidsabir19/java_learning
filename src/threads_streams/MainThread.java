@@ -1,4 +1,4 @@
-package threadsAndstreams;
+package threads_streams;
 
 public class MainThread {
     public static void main(String[] args) {

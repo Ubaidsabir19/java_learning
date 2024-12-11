@@ -1,12 +1,13 @@
-package threadsAndstreams;
+package threads_streams;
 
-public class Thread2 extends Thread {
+public class Thread1 implements Runnable {
+
     @Override
     public void run() {
-        for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 10; i++) {
             try {
                 Thread.sleep(1000);
-                System.out.println("j: " + j);
+                System.out.println("i: " + i);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -1,5 +1,6 @@
 package config;
 
+import employeeData.Department;
 import employeeData.Employee;
 
 import java.sql.*;
@@ -14,14 +15,14 @@ public class DatabaseConfig2 {
         return connection;
     }
 
-    public static void insertData(String url, String user, String password, Employee employee, String departmentName) {
+    public static void insertData(String url, String user, String password, Employee employee, Department department) {
         String insertEmployee = "INSERT INTO employee (id, name, email, age, salary, department, designation, birthdate) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String insertDepartment = "INSERT INTO department (name) VALUES (?)";
         String insertEmployeeDepartment = "INSERT INTO departmentEmployee (department_id, employee_id) VALUES (?, ?)";
 
         try (Connection connection = getDatabaseConnection2(url, user, password)) {
-
+            connection.setAutoCommit(false);
             int employeeId;
             try (PreparedStatement employeeStatement = connection.prepareStatement(insertEmployee)) {
                 employeeStatement.setInt(1, employee.getId());
@@ -37,27 +38,27 @@ public class DatabaseConfig2 {
                 employeeId = employee.getId();
             }
 
-            // Insert department data
             int departmentId;
             try (PreparedStatement departmentStatement = connection.prepareStatement(insertDepartment, Statement.RETURN_GENERATED_KEYS)) {
-                departmentStatement.setString(1, departmentName);
+                departmentStatement.setString(1, department.getName());
                 departmentStatement.executeUpdate();
 
                 try (ResultSet generatedKeys = departmentStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         departmentId = generatedKeys.getInt(1);
+                        System.out.println("Department ID: " + departmentId);
                     } else {
                         throw new SQLException("Failed to retrieve department ID.");
                     }
                 }
             }
 
-            // Insert into employee_department table
             try (PreparedStatement relationStatement = connection.prepareStatement(insertEmployeeDepartment)) {
-                relationStatement.setInt(1, employeeId);
-                relationStatement.setInt(2, departmentId);
+                relationStatement.setInt(1, departmentId);
+                relationStatement.setInt(2, employeeId);
                 relationStatement.executeUpdate();
             }
+            connection.commit();
             System.out.println("Data inserted successfully!");
 
         } catch (SQLException e) {

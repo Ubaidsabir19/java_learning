@@ -588,7 +588,7 @@ public class Main {
                 }
             }
 
-            DatabaseConfig2.insertData(configUrl, configUser, configPassword, employee, String.valueOf(department));
+            DatabaseConfig2.insertData(configUrl, configUser, configPassword, employee, department);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
